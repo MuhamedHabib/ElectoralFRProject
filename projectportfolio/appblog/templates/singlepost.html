@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block metatags %}
+<meta name="description" content="{{ object.metades}}" />
+<meta property="og:title" content="{{ object.title }}">
+<meta property="og:site_name" content="Portfolio">
+<meta property="og:url" content="{% url 'singlepost' object.slug %}">
+<meta property="og:description" content="{{ object.metades }}">
+<meta property="og:type" content="article">
+{% endblock %}
+{% block content %}
+<section class="my-5">
+  <div class="container">
+    <h2>{{ object.title }}</h2>
+    <small class="text-muted">Posted at {{ object.updated_on }} By {{ object.author.first_name }} {{ object.author.last_name }}</small>
+    <p>{{ object.content | safe }}</p>
+  </div>
+</section>
+{% endblock %}

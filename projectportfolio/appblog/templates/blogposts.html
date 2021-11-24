@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blogs{% endblock %}
+{% block metatags %}
+<meta name="description" content="A destination for curious mindsg">
+<meta property="og:title" content="Blog posts">
+<meta property="og:site_name" content="Portfolio">
+<meta property="og:description" content="A destination for curious minds">
+<meta property="og:type" content="website">
+{% endblock %}
+{% block content %}
+<section class="my-5">
+  <div class="container">
+    <div class="row mb-3">
+      <h1>Recent Posts</h1>
+    </div>
+    {% if posts_list|length > 1 %}
+      {% for post in posts_list %}
+        <div class="row">
+          <div class="col-md-5">
+            <a href="{% url 'singlepost' post.pk %}">
+              <img class="img-fluid rounded" src="http://placehold.it/700x300" alt="">
+            </a>
+          </div>
+          <div class="col-md-7">
+            <h3><a class="text-crayola" href="{% url 'singlepost' post.slug %}">{{ post.title }}</a></h3>
+            <small class="text-muted">Posted at {{ post.updated_on }} By {{ post.author.first_name }} {{ post.author.last_name }}</small>
+            <p>{{ post.metades }}</p>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+      <!-- Pagination -->
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+          </li>
+        {% endif %}
+        <li class="page-item">
+          <a class="page-link" href="#">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a>
+        </li>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    {% else %}
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-muted">No posts available, yet</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
